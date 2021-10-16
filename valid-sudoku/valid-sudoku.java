@@ -17,7 +17,7 @@ class Solution {
     
     private boolean isValid(char[][] board, char charToPlace, int row, int col){
        for (int i =0; i < board.length; ++i){
-            if (board[row][i] == charToPlace) return false;
+           if (board[row][i] == charToPlace) return false;
            if (board[i][col] == charToPlace)return false;
        }
         
