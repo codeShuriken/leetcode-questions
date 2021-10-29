@@ -1,43 +1,41 @@
 class Solution {
     public int orangesRotting(int[][] grid) {
-        if (grid == null || grid.length == 0)return 0;
-        Queue<int[]> q  = new LinkedList<>();
-        int m = grid.length, n = grid[0].length;
-        
         int freshOranges = 0;
+        Queue<int[]> q  = new LinkedList<>();
+        int[][] dirs = {{0,1}, {0,-1}, {1,0}, {-1,0}};
         
+        int m = grid.length, n = grid[0].length;
         for (int i = 0; i < m; ++i){
             for (int j = 0; j < n; ++j){
-                if (grid[i][j] == 1){
-                    freshOranges++;
-                }else if (grid[i][j] == 2){
+                if (grid[i][j] == 2){
                     q.offer(new int[]{i, j});
+                }else if (grid[i][j] == 1){
+                    freshOranges++;
                 }
             }
         }
         
         if (freshOranges == 0)return 0;
-        int time = 0;
-        int[][] dirs  = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
-        // boolean[][] visited = new boolean[m][n];
+        int steps = 0;
         
         while (!q.isEmpty()){
             int size = q.size();
             for (int i = 0; i < size; ++i){
                 int[] cur = q.poll();
                 for (int[] dir : dirs){
-                    int x  = dir[0] + cur[0], y = cur[1] + dir[1];
-                    if (isValid(grid, x, y) && grid[x][y] == 1){
+                    int newX = dir[0] + cur[0], newY = dir[1] + cur[1];
+                    if (isValid(grid, newX, newY) && grid[newX][newY] == 1){
                         --freshOranges;
-                        grid[x][y] = 2;
-                        q.offer(new int[]{x, y});
+                        grid[newX][newY] = 2;
+                        q.offer(new int[]{newX, newY});
                     }
                 }
             }
-            time++;
+            ++steps;
         }
         
-        return freshOranges == 0 ? time-1 : -1;
+        return freshOranges != 0 ? -1 : steps-1;
+        
     }
     
     private boolean isValid(int[][] grid, int i, int j){
