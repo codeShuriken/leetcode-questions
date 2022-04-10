@@ -22,7 +22,6 @@ class Solution {
                     stack.push(Integer.parseInt(op));
                     break;
             }
-            System.out.println(stack);
         }
         while (!stack.isEmpty()) {
             totalScore += stack.pop();
